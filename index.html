@@ -408,6 +408,7 @@
     </div>
   </footer>
 
+  <script src="data/site-data-en.js?v=20260611-2"></script>
   <script>
     const state = {
       solutions: [],
@@ -541,10 +542,11 @@
 
     async function loadData() {
       try {
-        const [solutions, groupedTools] = await Promise.all([
-          fetch("data/solutions-en.json").then(response => response.json()),
-          fetch("data/industry-tools-en.json").then(response => response.json()),
-        ]);
+        const solutions = window.ENGLISH_SOLUTION_DATA;
+        const groupedTools = window.ENGLISH_TOOL_DATA;
+        if (!Array.isArray(solutions) || !groupedTools || typeof groupedTools !== "object") {
+          throw new Error("Embedded English datasets are unavailable.");
+        }
         state.solutions = solutions;
         state.tools = Object.values(groupedTools).flat();
         $("#heroSolutionCount").textContent = state.solutions.length;

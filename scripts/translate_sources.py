@@ -320,6 +320,14 @@ def main() -> None:
     (DATA_DIR / "industry-tools-en.json").write_text(
         json.dumps(tools_grouped_en, ensure_ascii=False, indent=2), encoding="utf-8"
     )
+    (DATA_DIR / "site-data-en.js").write_text(
+        "window.ENGLISH_SOLUTION_DATA = "
+        + json.dumps(solutions_en, ensure_ascii=False)
+        + ";\nwindow.ENGLISH_TOOL_DATA = "
+        + json.dumps(tools_grouped_en, ensure_ascii=False)
+        + ";\n",
+        encoding="utf-8",
+    )
     write_csv(DATA_DIR / "solutions-en.csv", solutions_en, solution_fields)
     write_csv(DATA_DIR / "industry-tools-en.csv", tools_flat_en, tool_fields)
 
